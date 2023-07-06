@@ -12,7 +12,9 @@ You need:
 * [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) or [PowerShell](https://learn.microsoft.com/en-us/powershell/azure/?view=azps-10.1.0)
 
 Create the following environment variables:
-* ``COSMOS_ENDPOINT`` = "<cosmos-account-URI>"
-* ``COSMOS_KEY`` = "<cosmos-account-PRIMARY-KEY>"
+```
+COSMOS_ENDPOINT = "<cosmos-account-URI>"
+COSMOS_KEY = "<cosmos-account-PRIMARY-KEY>"
+```
 
 Values can be found in the Azure portal, in your Cosmos DB NoSQL account, under _Keys (URI and PRIMARY KEY respectivly)_.

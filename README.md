@@ -15,7 +15,12 @@ You need:
 You need the "Cosmos DB Built-in Data Contributor", see [details here](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-setup-rbac). Try this:
 
 ```
-az cosmosdb sql role assignment create --account-name <COSMOS_ACCOUNT_NAME> --resource-group <RG_NAME> --scope "/" --principal-id <PRINCIPAL_ID> --role-definition-id /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/comsos-db-rg/providers/Microsoft.DocumentDB/databaseAccounts/comos-db-no-sql/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002
+az cosmosdb sql role assignment create --account-name <COSMOS_ACCOUNT_NAME> --resource-group <RG_NAME> 
+    --scope "/" --principal-id <PRINCIPAL_ID>
+    --role-definition-id /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/comsos-db-rg/providers/Microsoft.DocumentDB/databaseAccounts/comos-db-no-sql/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002
+
+// Get your <PRINCIPAL_ID> by running (the "name" attribute in the output):
+az ad user show --id "<your-email-address>"
 ```
 
 The provided .NET console app was created and configured as such:

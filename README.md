@@ -11,6 +11,11 @@ You need:
 * [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet) (.NET 7.0 as of July 23)
 * [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) or [PowerShell](https://learn.microsoft.com/en-us/powershell/azure/?view=azps-10.1.0)
 
+The provided .NET console app was created and configured as such:
+* ``dotnet new console``
+* ``dotnet add package Microsoft.Azure.Cosmos``
+* ``dotnet add package Azure.Identity``
+
 Create the following environment variables:
 ```
 COSMOS_ENDPOINT = "<cosmos-account-URI>"

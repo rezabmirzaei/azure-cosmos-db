@@ -10,6 +10,7 @@ You need:
 * A Cosmos DB NoSQL account in your Azure subscription
 * [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet) (.NET 7.0 as of July 23)
 * [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) or [PowerShell](https://learn.microsoft.com/en-us/powershell/azure/?view=azps-10.1.0)
+* __Heads up!__ Must have the [necessary roles to manage DB resources](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-dotnet?tabs=azure-portal%2Cwindows%2Cpasswordless%2Csign-in-azure-cli#create-the-custom-role).
 
 The provided .NET console app was created and configured as such:
 * ``dotnet new console``

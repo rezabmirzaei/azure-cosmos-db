@@ -2,10 +2,12 @@
 using Azure.Identity;
 
 
-string cosmosEndpoint = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
-if (String.IsNullOrEmpty(cosmosEndpoint))
+var cosmosEndpoint = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
+var cosmosDB = Environment.GetEnvironmentVariable("COSMOS_DB");
+var cosmosDBContainer = Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
+if (String.IsNullOrEmpty(cosmosEndpoint) || String.IsNullOrEmpty(cosmosDB) || String.IsNullOrEmpty(cosmosDBContainer))
 {
-    throw new ArgumentNullException("cosmosEndpoint", "Must provide a storage account name");
+    throw new ArgumentNullException("Missing expected env. variables!");
 }
 
 Console.WriteLine("\n###  Cosmos DB Demo  ####\n");
@@ -16,14 +18,41 @@ using CosmosClient cosmosClient = new(
 );
 Console.WriteLine($"Connected to {cosmosClient.Endpoint}\n");
 
-// Create a DB
-string dbName = $"DummyDB_{Guid.NewGuid().ToString().Substring(0, 8)}";
-Console.Write($"\n#### Press any key to create new DB {dbName}");
+// Get reference to database
+Console.Write($"\n#### Press any key to get reference to DB {cosmosDB}");
 Console.ReadLine();
-Database db = await cosmosClient.CreateDatabaseAsync(dbName);
+Database database = cosmosClient.GetDatabase(cosmosDB);
+Console.WriteLine($"Got reference to DB: {database.Id}");
 
-// Create a container
-// string containerName = $"DummyContainer_{Guid.NewGuid().ToString().Substring(0, 8)}";
-// Console.Write($"\n#### Press any key to create new container {containerName}");
-// Console.ReadLine();
-// Container container = await db.CreateContainerAsync(containerName);
+// Get reference to container
+Console.Write($"\n#### Press any key to get reference to Container {cosmosDBContainer}");
+Console.ReadLine();
+Container container = database.GetContainer(cosmosDBContainer);
+Console.WriteLine($"Got reference to container: {container.Id}");
+
+
+// Create new object and upsert (create or replace) to container
+Product newItem = new(
+    id: Guid.NewGuid().ToString(),
+    categoryId: Guid.NewGuid().ToString(),
+    categoryName: "gear-surf-surfboards",
+    name: "Yamba Surfboard",
+    quantity: 12,
+    sale: false
+);
+
+Product createdItem = await container.CreateItemAsync<Product>(
+    item: newItem,
+    partitionKey: new PartitionKey(newItem.categoryId)
+);
+
+Console.WriteLine($"Created item:\t{createdItem.id}\t[{createdItem.categoryName}]");
+
+public record Product(
+    string id,
+    string categoryId,
+    string categoryName,
+    string name,
+    int quantity,
+    bool sale
+);

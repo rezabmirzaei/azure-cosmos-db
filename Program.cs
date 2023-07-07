@@ -43,7 +43,7 @@ Product newItem = new(
 
 Product createdItem = await container.CreateItemAsync<Product>(
     item: newItem,
-    partitionKey: new PartitionKey(newItem.categoryId)
+    partitionKey: new PartitionKey(newItem.id)
 );
 
 Console.WriteLine($"Created item:\t{createdItem.id}\t[{createdItem.categoryName}]");

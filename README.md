@@ -35,8 +35,8 @@ COSMOS_DB = "<cosmos-account-DB>"
 COSMOS_CONTAINER = "<cosmos-account-DB-CONTAINER>"
 ```
 
+Cosmos DB account URI can be found in the Azure portal, in your Cosmos DB NoSQL account, under _Keys (URI)_.
+
 Create a database and a container:
 * ``az cosmosdb sql database create --account-name <cosmosdb-account-name> --resource-group <resource-group-name> --name ${env:COSMOS_DB}``
 * ``az cosmosdb sql container create --account-name <cosmosdb-account-name> --resource-group <resource-group-name> --database-name ${env:COSMOS_DB} --name ${env:COSMOS_CONTAINER} --partition-key-path "/id"``
-
-Values can be found in the Azure portal, in your Cosmos DB NoSQL account, under _Keys (URI and PRIMARY KEY respectivly)_.

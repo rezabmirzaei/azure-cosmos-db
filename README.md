@@ -38,5 +38,13 @@ COSMOS_CONTAINER = "<cosmos-account-DB-CONTAINER>"
 Cosmos DB account URI can be found in the Azure portal, in your Cosmos DB NoSQL account, under _Overview_ or _Keys (URI)_.
 
 Create a database and a container:
-* ``az cosmosdb sql database create --account-name <cosmosdb-account-name> --resource-group <resource-group-name> --name ${env:COSMOS_DB}``
-* ``az cosmosdb sql container create --account-name <cosmosdb-account-name> --resource-group <resource-group-name> --database-name ${env:COSMOS_DB} --name ${env:COSMOS_CONTAINER} --partition-key-path "/id"``
+* ``az cosmosdb sql database create --account-name <cosmosdb-account-name> --resource-group <rg-name> --name ${env:COSMOS_DB}``
+* ``az cosmosdb sql container create --account-name <cosmosdb-account-name> --resource-group <rg-name> --database-name ${env:COSMOS_DB} --name ${env:COSMOS_CONTAINER} --partition-key-path "/id"``
+
+
+## Role assignment:
+
+1. ``az cosmosdb sql role assignment list -a <cosmosdb-account-name> -g <rg-name>`` - See role definitions set on CosmosDB account
+2. ``az cosmosdb sql role definition create -a <cosmosdb-account-name> -g  <rg-name> --body "{'RoleName': 'CosmosDBPasswordlessReadWrite', 'Type': 'CustomRole', 'AssignableScopes': ['/'], 'Permissions': [{'DataActions': ['Microsoft.DocumentDB/databaseAccounts/readMetadata', 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/*', 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/*']}]}"`` - Remember "name" from output!
+3. ``az ad user show --id <user-id>`` - To get --principal-id for next step.
+4. ``az cosmosdb sql role assignment create -a <cosmosdb-account-name> -g <rg-name> --scope "/" --principal-id <principal-id> --role-definition-id <role-def-id>`` --role-definition-id is "name" from step 2. 

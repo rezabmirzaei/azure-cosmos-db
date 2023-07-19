@@ -32,18 +32,18 @@ Console.WriteLine($"Got reference to container: {container.Id}");
 
 
 // Create new animal object and upsert (create or replace) to container
-Product lion = new(
+Animal lion = new(
     id: Guid.NewGuid().ToString(),
-    name: "Lion",
-    region: "Africa"
+    name: "Elephant",
+    region: "Asia"
 );
 
-Product createdItem = await container.CreateItemAsync<Product>(
+Animal createdAnimal = await container.CreateItemAsync<Animal>(
     item: lion,
     partitionKey: new PartitionKey(lion.region)
 );
 
-Console.WriteLine($"Created item:\t{createdItem.id}\t[{createdItem.categoryName}]");
+Console.WriteLine($"Created item:\t{createdAnimal.id}\t[{createdAnimal.name}]");
 
 public record Animal(
     string id,

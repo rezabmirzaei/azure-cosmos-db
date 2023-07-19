@@ -2,9 +2,9 @@
 using Azure.Identity;
 
 
-var cosmosEndpoint = "https://cosmosdb-sdk-demo.documents.azure.com:443/"; // Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
-var cosmosDB = "Zoo"; //Environment.GetEnvironmentVariable("COSMOS_DB");
-var cosmosDBContainer = "Animals"; // Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
+var cosmosEndpoint = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
+var cosmosDB = Environment.GetEnvironmentVariable("COSMOS_DB");
+var cosmosDBContainer = Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
 if (String.IsNullOrEmpty(cosmosEndpoint) || String.IsNullOrEmpty(cosmosDB) || String.IsNullOrEmpty(cosmosDBContainer))
 {
     throw new ArgumentNullException("Missing expected env. variables!");

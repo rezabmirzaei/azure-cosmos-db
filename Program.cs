@@ -2,9 +2,9 @@
 using Azure.Identity;
 
 
-var cosmosEndpoint = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
-var cosmosDB = Environment.GetEnvironmentVariable("COSMOS_DB");
-var cosmosDBContainer = Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
+var cosmosEndpoint = "https://cosmosdb-sdk-demo.documents.azure.com:443/"; // Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
+var cosmosDB = "Zoo"; //Environment.GetEnvironmentVariable("COSMOS_DB");
+var cosmosDBContainer = "Animals"; // Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
 if (String.IsNullOrEmpty(cosmosEndpoint) || String.IsNullOrEmpty(cosmosDB) || String.IsNullOrEmpty(cosmosDBContainer))
 {
     throw new ArgumentNullException("Missing expected env. variables!");
@@ -32,15 +32,15 @@ Console.WriteLine($"Got reference to container: {container.Id}");
 
 
 // Create new animal object and upsert (create or replace) to container
-Animal lion = new(
+Animal animal = new(
     id: Guid.NewGuid().ToString(),
-    name: "Elephant",
-    region: "Asia"
+    name: "Lion",
+    region: "Africa"
 );
 
 Animal createdAnimal = await container.CreateItemAsync<Animal>(
-    item: lion,
-    partitionKey: new PartitionKey(lion.region)
+    item: animal,
+    partitionKey: new PartitionKey(animal.region)
 );
 
 Console.WriteLine($"Created item:\t{createdAnimal.id}\t[{createdAnimal.name}]");

@@ -2,9 +2,9 @@
 using Azure.Identity;
 
 
-var cosmosEndpoint = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
-var cosmosDB = Environment.GetEnvironmentVariable("COSMOS_DB");
-var cosmosDBContainer = Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
+var cosmosEndpoint = "https://cosmosdb-sdk-demo.documents.azure.com:443/"; //Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
+var cosmosDB = "Zoo"; //Environment.GetEnvironmentVariable("COSMOS_DB");
+var cosmosDBContainer = "Animals"; //Environment.GetEnvironmentVariable("COSMOS_CONTAINER");
 if (String.IsNullOrEmpty(cosmosEndpoint) || String.IsNullOrEmpty(cosmosDB) || String.IsNullOrEmpty(cosmosDBContainer))
 {
     throw new ArgumentNullException("Missing expected env. variables!");
@@ -31,28 +31,22 @@ Container container = database.GetContainer(cosmosDBContainer);
 Console.WriteLine($"Got reference to container: {container.Id}");
 
 
-// Create new object and upsert (create or replace) to container
-Product newItem = new(
+// Create new animal object and upsert (create or replace) to container
+Product lion = new(
     id: Guid.NewGuid().ToString(),
-    categoryId: Guid.NewGuid().ToString(),
-    categoryName: "gear-surf-surfboards",
-    name: "Yamba Surfboard",
-    quantity: 12,
-    sale: false
+    name: "Lion",
+    region: "Africa"
 );
 
 Product createdItem = await container.CreateItemAsync<Product>(
-    item: newItem,
-    partitionKey: new PartitionKey(newItem.id)
+    item: lion,
+    partitionKey: new PartitionKey(lion.region)
 );
 
 Console.WriteLine($"Created item:\t{createdItem.id}\t[{createdItem.categoryName}]");
 
-public record Product(
+public record Animal(
     string id,
-    string categoryId,
-    string categoryName,
     string name,
-    int quantity,
-    bool sale
+    string region
 );

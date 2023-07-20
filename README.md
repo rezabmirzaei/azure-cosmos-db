@@ -1,6 +1,6 @@
 # Azure Cosmos DB
 
-Resources used for teaching lesson about Azure Cosmos DB using the .
+Resources used for teaching lesson about Azure Cosmos DB using the Azure Cosmos DB for NoSQL client library for .NET.
 
 ## Setup
 

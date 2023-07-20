@@ -28,18 +28,17 @@ The provided .NET console app was created and configured as such:
 * ``dotnet add package Microsoft.Azure.Cosmos``
 * ``dotnet add package Azure.Identity``
 
+Assumes you have an active Cosmos DB account for NoSQL. Create a database and a container:
+* ``az cosmosdb sql database create --account-name <cosmosdb-account-name> --resource-group <rg-name> --name ${env:COSMOS_DB}``
+* ``az cosmosdb sql container create --account-name <cosmosdb-account-name> --resource-group <rg-name> --database-name ${env:COSMOS_DB} --name ${env:COSMOS_CONTAINER} --partition-key-path "/id"``
+
 Create the following environment variables:
 ```
 COSMOS_ENDPOINT = "<cosmos-account-URI>"
 COSMOS_DB = "<cosmos-account-DB>"
 COSMOS_CONTAINER = "<cosmos-account-DB-CONTAINER>"
 ```
-
 Cosmos DB account URI can be found in the Azure portal, in your Cosmos DB NoSQL account, under _Overview_ or _Keys (URI)_.
-
-Create a database and a container:
-* ``az cosmosdb sql database create --account-name <cosmosdb-account-name> --resource-group <rg-name> --name ${env:COSMOS_DB}``
-* ``az cosmosdb sql container create --account-name <cosmosdb-account-name> --resource-group <rg-name> --database-name ${env:COSMOS_DB} --name ${env:COSMOS_CONTAINER} --partition-key-path "/id"``
 
 
 ## Role assignment:
